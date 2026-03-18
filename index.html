@@ -1,46 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>System Breach Detected</title>
+  <title>WCU Secure Portal</title>
   <style>
     body {
-      background-color: black;
-      color: #00ff00;
-      font-family: monospace;
-      padding: 40px;
-    }
-    h1 {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
       text-align: center;
-      color: red;
     }
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-    }
+
     #form {
-      text-align: center;
       margin-top: 100px;
     }
+
+    .card {
+      background: white;
+      padding: 30px;
+      width: 320px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #4F2586;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4F2586;
+      color: #FFC627;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
     #terminal {
       display: none;
-      margin-top: 30px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+      padding: 30px;
+      height: 100vh;
+      text-align: left;
     }
-    .red { color: red; font-weight: bold; }
+
+    .red {
+      color: red;
+      font-weight: bold;
+    }
   </style>
 </head>
 
 <body>
 
-<h1>⚠ SECURE ACCESS PORTAL ⚠</h1>
-
 <div id="form">
-  <p>Enter your name to continue:</p>
-  <input type="text" id="nameInput" placeholder="Your name">
-  <br><br>
-  <button onclick="startHack()">ENTER</button>
+  <div class="card">
+    <h2>WCU Secure Login</h2>
+    <p>Please enter your name to continue</p>
+    <input type="text" id="nameInput" placeholder="First Name">
+    <br>
+    <button onclick="startHack()">Login</button>
+  </div>
 </div>
 
 <div id="terminal"></div>
@@ -60,7 +91,7 @@ async function getIP() {
     let data = await res.json();
     return data.ip;
   } catch {
-    return "192.168.1.1"; // fallback fake IP
+    return "192.168.1.1";
   }
 }
 
@@ -79,21 +110,26 @@ function typeLine(text, delay) {
 async function startHack() {
   let name = document.getElementById("nameInput").value;
   if (!name) {
-    alert("Enter your name!");
+    alert("Please enter your name");
     return;
   }
 
+  // switch to "hack" mode
   document.getElementById("form").style.display = "none";
   document.getElementById("terminal").style.display = "block";
 
   let device = getDevice();
   let ip = await getIP();
 
-  await typeLine("Initializing connection...", 500);
-  await typeLine("Bypassing firewall...", 1000);
+  await typeLine("Connecting to WCU servers...", 800);
+  await typeLine("Authenticating user...", 1200);
+
+  // tone shift starts here
+  await typeLine("<span class='red'>WARNING: Suspicious activity detected</span>", 1500);
+  await typeLine("Bypassing security protocols...", 1200);
   await typeLine("<span class='red'>ACCESS GRANTED</span>", 1200);
 
-  await typeLine("Detecting device...", 1200);
+  await typeLine("Collecting device data...", 1200);
   await typeLine("Device: <span class='red'>" + device + "</span>", 1500);
 
   await typeLine("Locating user...", 1200);
@@ -102,20 +138,19 @@ async function startHack() {
   await typeLine("Extracting profile...", 1200);
   await typeLine("User identified: <span class='red'>" + name + "</span>", 1500);
 
-  await typeLine("<span class='red'>WARNING: Data breach in progress</span>", 1500);
+  await typeLine("<span class='red'>DATA BREACH IN PROGRESS</span>", 1500);
 
-  // Countdown
   for (let i = 5; i > 0; i--) {
     await typeLine("Uploading data in " + i + "...", 1000);
   }
 
-  await typeLine("<span class='red'>DATA TRANSFER COMPLETE</span>", 1000);
+  await typeLine("<span class='red'>TRANSFER COMPLETE</span>", 1200);
 
-  await typeLine("<br><span class='red'>⚠ THIS WAS A SIMULATION ⚠</span>", 1500);
-  await typeLine("You scanned an unknown QR code.", 1200);
-  await typeLine("You entered personal data.", 1200);
-  await typeLine("Your device shared information automatically.", 1200);
-  await typeLine("<br>Real attackers use these exact techniques.", 1500);
+  await typeLine("<br><span class='red'>⚠ THIS WAS A SIMULATION ⚠</span>", 2000);
+  await typeLine("You scanned an unknown QR code.", 1500);
+  await typeLine("You entered personal information.", 1500);
+  await typeLine("Your device shared data automatically.", 1500);
+  await typeLine("<br>This is how real phishing attacks begin.", 1800);
 }
 </script>
 
