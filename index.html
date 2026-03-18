@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Access Portal</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      text-align: center;
+      padding-top: 100px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    #hack {
+      display: none;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🔐 Secure Access Required</h1>
+
+<div id="form">
+  <p>Enter your name to continue:</p>
+  <input type="text" id="nameInput" placeholder="Your name">
+  <br><br>
+  <button onclick="startHack()">Continue</button>
+</div>
+
+<div id="hack">
+  <p id="line1"></p>
+  <p id="line2"></p>
+  <p id="line3"></p>
+  <p id="line4"></p>
+</div>
+
+<script>
+function startHack() {
+  let name = document.getElementById("nameInput").value;
+  if (!name) {
+    alert("Enter your name!");
+    return;
+  }
+
+  document.getElementById("form").style.display = "none";
+  document.getElementById("hack").style.display = "block";
+
+  setTimeout(() => {
+    document.getElementById("line1").innerText = "Connecting to device...";
+  }, 1000);
+
+  setTimeout(() => {
+    document.getElementById("line2").innerText = "Extracting user data...";
+  }, 2500);
+
+  setTimeout(() => {
+    document.getElementById("line3").innerText = "Target identified: " + name;
+  }, 4000);
+
+  setTimeout(() => {
+    document.getElementById("line4").innerHTML =
+      "⚠️ This was a simulation.<br><br>You just gave your data to an unknown source.";
+  }, 6000);
+}
+</script>
+
+</body>
+</html>
