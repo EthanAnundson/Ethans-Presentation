@@ -1,46 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Secure Access Portal</title>
+  <title>System Breach Detected</title>
   <style>
     body {
       background-color: black;
       color: #00ff00;
       font-family: monospace;
+      padding: 40px;
+    }
+    h1 {
       text-align: center;
-      padding-top: 100px;
+      color: red;
     }
     input, button {
       padding: 10px;
       font-size: 16px;
     }
-    #hack {
+    #form {
+      text-align: center;
+      margin-top: 100px;
+    }
+    #terminal {
       display: none;
       margin-top: 30px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
+    .red { color: red; font-weight: bold; }
   </style>
 </head>
 
 <body>
 
-<h1>🔐 Secure Access Required</h1>
+<h1>⚠ SECURE ACCESS PORTAL ⚠</h1>
 
 <div id="form">
   <p>Enter your name to continue:</p>
   <input type="text" id="nameInput" placeholder="Your name">
   <br><br>
-  <button onclick="startHack()">Continue</button>
+  <button onclick="startHack()">ENTER</button>
 </div>
 
-<div id="hack">
-  <p id="line1"></p>
-  <p id="line2"></p>
-  <p id="line3"></p>
-  <p id="line4"></p>
-</div>
+<div id="terminal"></div>
 
 <script>
-function startHack() {
+function getDevice() {
+  const ua = navigator.userAgent;
+  if (/iPhone/i.test(ua)) return "iPhone";
+  if (/Android/i.test(ua)) return "Android device";
+  if (/iPad/i.test(ua)) return "iPad";
+  return "Unknown device";
+}
+
+async function getIP() {
+  try {
+    let res = await fetch("https://api.ipify.org?format=json");
+    let data = await res.json();
+    return data.ip;
+  } catch {
+    return "192.168.1.1"; // fallback fake IP
+  }
+}
+
+function typeLine(text, delay) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      let p = document.createElement("p");
+      p.innerHTML = text;
+      document.getElementById("terminal").appendChild(p);
+      window.scrollTo(0, document.body.scrollHeight);
+      resolve();
+    }, delay);
+  });
+}
+
+async function startHack() {
   let name = document.getElementById("nameInput").value;
   if (!name) {
     alert("Enter your name!");
@@ -48,24 +84,38 @@ function startHack() {
   }
 
   document.getElementById("form").style.display = "none";
-  document.getElementById("hack").style.display = "block";
+  document.getElementById("terminal").style.display = "block";
 
-  setTimeout(() => {
-    document.getElementById("line1").innerText = "Connecting to device...";
-  }, 1000);
+  let device = getDevice();
+  let ip = await getIP();
 
-  setTimeout(() => {
-    document.getElementById("line2").innerText = "Extracting user data...";
-  }, 2500);
+  await typeLine("Initializing connection...", 500);
+  await typeLine("Bypassing firewall...", 1000);
+  await typeLine("<span class='red'>ACCESS GRANTED</span>", 1200);
 
-  setTimeout(() => {
-    document.getElementById("line3").innerText = "Target identified: " + name;
-  }, 4000);
+  await typeLine("Detecting device...", 1200);
+  await typeLine("Device: <span class='red'>" + device + "</span>", 1500);
 
-  setTimeout(() => {
-    document.getElementById("line4").innerHTML =
-      "⚠️ This was a simulation.<br><br>You just gave your data to an unknown source.";
-  }, 6000);
+  await typeLine("Locating user...", 1200);
+  await typeLine("IP Address: <span class='red'>" + ip + "</span>", 1500);
+
+  await typeLine("Extracting profile...", 1200);
+  await typeLine("User identified: <span class='red'>" + name + "</span>", 1500);
+
+  await typeLine("<span class='red'>WARNING: Data breach in progress</span>", 1500);
+
+  // Countdown
+  for (let i = 5; i > 0; i--) {
+    await typeLine("Uploading data in " + i + "...", 1000);
+  }
+
+  await typeLine("<span class='red'>DATA TRANSFER COMPLETE</span>", 1000);
+
+  await typeLine("<br><span class='red'>⚠ THIS WAS A SIMULATION ⚠</span>", 1500);
+  await typeLine("You scanned an unknown QR code.", 1200);
+  await typeLine("You entered personal data.", 1200);
+  await typeLine("Your device shared information automatically.", 1200);
+  await typeLine("<br>Real attackers use these exact techniques.", 1500);
 }
 </script>
 
